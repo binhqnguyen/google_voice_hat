@@ -34,8 +34,7 @@ def main():
     led = aiy.voicehat.get_led()
     aiy.audio.get_recorder().start()
     
-    client = Client("AC81fc0e660e0e022890b26790fdff8e01", "89d4eb65926f3765fefe704bbf667ec9")
-    #client = Client("Twilio client ID", "key")
+    client = Client("Twilio client ID", "key")
 
     listening = 0
     print("Say OK ...")
