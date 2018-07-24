@@ -29,6 +29,7 @@ import aiy.assistant.auth_helpers
 from aiy.assistant.library import Assistant
 import aiy.voicehat
 from google.assistant.library.event import EventType
+from cloudspeech import *
 
 logging.basicConfig(
     level=logging.INFO,
@@ -40,21 +41,28 @@ def process_event(event):
     status_ui = aiy.voicehat.get_status_ui()
     if event.type == EventType.ON_START_FINISHED:
         status_ui.status('ready')
+        print (event.type)
         if sys.stdout.isatty():
             print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
 
     elif event.type == EventType.ON_CONVERSATION_TURN_STARTED:
+        print (event.type)
+        if process_cloud_speech() == 0:
+            return
         status_ui.status('listening')
 
     elif event.type == EventType.ON_END_OF_UTTERANCE:
+        print (event.type)
         status_ui.status('thinking')
 
     elif (event.type == EventType.ON_CONVERSATION_TURN_FINISHED
           or event.type == EventType.ON_CONVERSATION_TURN_TIMEOUT
           or event.type == EventType.ON_NO_RESPONSE):
+        print (event.type)
         status_ui.status('ready')
 
     elif event.type == EventType.ON_ASSISTANT_ERROR and event.args and event.args['is_fatal']:
+        print (event.type)
         sys.exit(1)
 
 
